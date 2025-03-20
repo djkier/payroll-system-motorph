@@ -3,6 +3,7 @@
  */
 
 package com.motorph.payroll.system;
+import com.motorph.payroll.system.ui.*;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -17,43 +18,60 @@ public class PayrollSystem {
     
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        String employee1 = "10001,Garcia,Manuel III,10/11/1983,\"Valero Carpark Building Valero Street 1227, Makati City\",966-860-270,44-4506057-3,820126853951,442-605-657-000,691295330870,Regular,Chief Executive Officer,N/A,\"90,000\",\"1,500\",\"2,000\",\"1,000\",\"45,000\",535.71";
-
+        MainScreen mainScreen = new MainScreen(scanner);
+        String sampleEmployee = "10001,Garcia,Manuel III,10/11/1983,\"Valero Carpark Building Valero Street 1227, Makati City\",966-860-270,44-4506057-3,820126853951,442-605-657-000,691295330870,Regular,Chief Executive Officer,N/A,\"90,000\",\"1,500\",\"2,000\",\"1,000\",\"45,000\",535.71";
+        String sampleAttendance = "10001,Garcia,Manuel III,06/03/2024,8:59,18:31";
 
         System.out.println("Hello World!");
-        viewInformation(employee1);
+        factoryEmployee(sampleEmployee);
+//        viewEmployeeDetails();
 
-        while (true) {
-            System.out.println("""
-                               *************************************
-                                    MotorPH Payroll Main Screen
-                               *************************************
-                               [1] Attach Attendance
-                               [2] View Employee Details
-                               [3] View Attendance
-                               [4] View Gross Salary
-                               [5] View Payslip
-                               [6] Exit
-                               -------------------------------------
-                               Enter the number you want to perform:
-                               """);
+
+        mainScreen.display();
             
-            int choice = Integer.parseInt(scanner.nextLine());
-            
-            if (choice == 6) {
-                break;
-            }
-            
-            if (choice == 2) {
-                viewEmployeeDetails();
-            }
-            
-            System.out.println("Enter another number!");
-        }
+//            if(scanner.hasNextInt()){
+//                int choice = scanner.nextInt();
+//                
+//                switch(choice) {
+//                    case 1:
+//                        System.out.println("number one");
+//                        break;
+//                        
+//                    case 2:
+//                        System.out.println("number two");
+//                        break;
+//                        
+//                    case 3:
+//                        System.out.println("number three");
+//                        break;
+//                        
+//                    case 4:
+//                        System.out.println("number one");
+//                        break;
+//                        
+//                    case 5:
+//                        System.out.println("number two");
+//                        break;
+//                        
+//                    case 6:
+//                        System.out.println("number three");
+//                        scanner.close();
+//                        System.exit(0);
+//                        break;    
+//                        
+//                    default:
+//                        System.out.println("Invalid");
+//                }
+//                
+//            } else {
+//                System.out.println("Invalid input. Please enter a number between 1 to 7.");
+//                scanner.next();
+//            }
+
         
     }
     
-    public static void viewInformation(String line) {
+    public static void factoryEmployee(String line) {
         String[] emp = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
 
         

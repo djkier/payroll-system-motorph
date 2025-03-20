@@ -65,11 +65,11 @@ public class Employee {
     
     
     public String toString(){
-        return "**********************************************" +
+        return "*************************************" +
                "\nEmployee no.: " + this.id +
                 "\nName: " + this.lastName + ", " + this.firstName + 
                 "\nBirthday: " + this.birthDate +
-                "\n**********************************************"
+                "\n*************************************"
                 ;
     }
 }
