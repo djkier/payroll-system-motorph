@@ -3,6 +3,7 @@
  */
 
 package com.motorph.payroll.system;
+import java.util.Scanner;
 
 /**
  *
@@ -11,6 +12,23 @@ package com.motorph.payroll.system;
 public class PayrollSystem {
 
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
         System.out.println("Hello World!");
+        System.out.println("Im Here!!");
+        
+        
+        while (true) {
+            System.out.println("Enter a number:");
+            int scan = scanner.nextInt();
+
+            if (scan == 1) {
+                break;
+            }
+            
+            System.out.println("Click 1 to exit");
+        }
+        
+        scanner.close();
     }
 }
