@@ -65,9 +65,8 @@ public class Employee {
     
     
     public String toString(){
-        return """
-               **********************************************
-               Employee no.: """ + this.id +
+        return "**********************************************" +
+               "\nEmployee no.: " + this.id +
                 "\nName: " + this.lastName + ", " + this.firstName + 
                 "\nBirthday: " + this.birthDate +
                 "\n**********************************************"

@@ -13,21 +13,48 @@ import java.util.ArrayList;
 
 
 public class PayrollSystem {
-
+    public static ArrayList<Employee> employeeDetailsList = new ArrayList<>();
+    
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        ArrayList<Employee> employeeDetailsList = new ArrayList<>();
-        
-        
-        //sample record
         String employee1 = "10001,Garcia,Manuel III,10/11/1983,\"Valero Carpark Building Valero Street 1227, Makati City\",966-860-270,44-4506057-3,820126853951,442-605-657-000,691295330870,Regular,Chief Executive Officer,N/A,\"90,000\",\"1,500\",\"2,000\",\"1,000\",\"45,000\",535.71";
-        
+
 
         System.out.println("Hello World!");
-        System.out.println("Im Here!!");
-        System.out.println(employee1);
+        viewInformation(employee1);
+
+        while (true) {
+            System.out.println("""
+                               *************************************
+                                    MotorPH Payroll Main Screen
+                               *************************************
+                               [1] Attach Attendance
+                               [2] View Employee Details
+                               [3] View Attendance
+                               [4] View Gross Salary
+                               [5] View Payslip
+                               [6] Exit
+                               -------------------------------------
+                               Enter the number you want to perform:
+                               """);
+            
+            int choice = Integer.parseInt(scanner.nextLine());
+            
+            if (choice == 6) {
+                break;
+            }
+            
+            if (choice == 2) {
+                viewEmployeeDetails();
+            }
+            
+            System.out.println("Enter another number!");
+        }
         
-        String[] emp = employee1.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
+    }
+    
+    public static void viewInformation(String line) {
+        String[] emp = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
 
         
         Employee employee = new Employee(
@@ -37,20 +64,12 @@ public class PayrollSystem {
             emp[15], emp[16], emp[17], emp[18]                
         );
         
-        System.out.println(employee);
-        
-        
-//        while (true) {
-//            System.out.println("Enter a number:");
-//            int scan = scanner.nextInt();
-//
-//            if (scan == 1) {
-//                break;
-//            }
-//            
-//            System.out.println("Click 1 to exit");
-//        }
-//        
-//        scanner.close();
+        employeeDetailsList.add(employee);
+    }
+    
+    public static void viewEmployeeDetails() {
+        for (Employee emp : employeeDetailsList) {
+            System.out.println(emp);
+        }
     }
 }
