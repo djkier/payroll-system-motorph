@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.motorph.payroll.system;
+package com.motorph.payroll.system.models;
 
 /**
  *
@@ -62,14 +62,19 @@ public class Employee {
         
     }
     
+    public String getId() {
+        return this.id;
+    }
+    
+    public String getLastName() {
+        return this.lastName;
+    }
+    
     
     
     public String toString(){
-        return "*************************************" +
-               "\nEmployee no.: " + this.id +
-                "\nName: " + this.lastName + ", " + this.firstName + 
-                "\nBirthday: " + this.birthDate +
-                "\n*************************************"
-                ;
+        return "Employee no.:\t" + this.id +
+                "\nName:\t\t" + this.lastName + ", " + this.firstName + 
+                "\nBirthday:\t" + this.birthDate;
     }
 }
