@@ -3,6 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.motorph.payroll.system.models;
+import java.util.ArrayList;
+import java.util.TreeMap;
+import java.util.Map;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 /**
  *
@@ -28,7 +33,7 @@ public class Employee {
     private Double clothingAll;
     private Double semiMonthlySal;
     private Double hourlyRate;
-    
+    private TreeMap<LocalDate, Attendance> attendanceRecords;
     
     public Employee (String id, String lastName, String firstName, String birthDate, String address, String phone, String sss, 
             String philhealth, String tin, String pagibig, String status, String position, String immSup, String basicSalary, 
@@ -53,6 +58,7 @@ public class Employee {
         this.clothingAll = numberParser(clothingAll);
         this.semiMonthlySal = numberParser(semiMonthlySal);
         this.hourlyRate = numberParser(hourlyRate);
+        this.attendanceRecords = new TreeMap<>();
     }
     
     private Double numberParser(String money) {
@@ -70,12 +76,44 @@ public class Employee {
         return this.lastName;
     }
     
+    public void addAttendance(String date, Attendance record){
+        String[] sliceDate = date.split("/");
+
+        attendanceRecords.put(LocalDate.of(
+                Integer.valueOf(sliceDate[2]),
+                Integer.valueOf(sliceDate[0]),
+                Integer.valueOf(sliceDate[1])), record);
+        
+
+    }
+    
+    public Map<LocalDate, Attendance> getAttendanceDec(){
+        return this.attendanceRecords.subMap(LocalDate.of(2024, 1, 2), LocalDate.of(2024, 6, 1));
+    }
     
     @Override
     public String toString(){
-        return "Employee no.:\t" + this.id +
-                "\nName:\t\t" + this.lastName + ", " + this.firstName + 
-                "\nBirthday:\t" + this.birthDate +
-                "\nTest:\t\t" + this.hourlyRate;
+//        return "Employee no.:\t" + this.id +
+//                "\nName:\t\t" + this.lastName + ", " + this.firstName + 
+//                "\nBirthday:\t" + this.birthDate +
+//                "\nTest:\t\t" + this.hourlyRate;
+        Map<LocalDate, Attendance> decRecords = getAttendanceDec();
+        String records = "";
+        for (Map.Entry<LocalDate, Attendance> entry : decRecords.entrySet()) {
+            records = records + entry.getValue() + "\n";
+        }
+        
+        if (records.equals("")) {
+            records = "No Record Found!";
+        }
+        
+        String template = 
+                "Employee No.: " + this.id + "\tLast Name: " + this.lastName +
+               "\nDate\t\tTime In\t\tTime Out\tTotal Hours\n";
+                
+        
+        
+        
+        return template + records;
     }
 }

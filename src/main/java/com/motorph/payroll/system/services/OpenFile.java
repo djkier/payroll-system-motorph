@@ -3,25 +3,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.motorph.payroll.system.services;
-
-
-import static com.motorph.payroll.system.PayrollSystem.employeeDetailsList;
-import com.motorph.payroll.system.models.Employee;
+import com.motorph.payroll.system.models.*;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
  * @author djjus
  */
 public class OpenFile {
-    private final ArrayList<Employee> employeeList;
-
+    private final Map<Integer, Employee> employeeMap;
     
     public OpenFile() {
-        this.employeeList = new ArrayList<>();
+        this.employeeMap = new HashMap<>();
     }
     
     public ArrayList<String> open(String fileName) {
@@ -47,7 +45,7 @@ public class OpenFile {
         return list;
     }
     
-    public ArrayList<Employee> openDetails(String fileName) {
+    public Map<Integer, Employee> openDetails(String fileName) {
         ArrayList<String> list = open(fileName);
         
         for (int i = 1; i < list.size(); i++) {
@@ -61,11 +59,29 @@ public class OpenFile {
                 emp[15], emp[16], emp[17], emp[18]                
             );
 
-            employeeList.add(employee);
+            employeeMap.put(Integer.valueOf(emp[0]), employee);
         }
 
-        return employeeList;
+        return employeeMap;
     }
+    
+    public void openAttendance(String fileName) {
+        ArrayList<Attendance> attendanceList = new ArrayList<>();
+        ArrayList<String> list = open(fileName);
+        for (int i = 1; i < list.size(); i++) {
+            String[] att = cleanSplit(list.get(i));
+            
+            Attendance details = new Attendance(
+                    att[0], att[3], att[4], att[5]
+            );
+            
+            employeeMap.get(Integer.valueOf(att[0])).addAttendance(att[3], details);
+
+        }
+        System.out.println(employeeMap.get(10001));
+        
+    }
+    
     
     public String[] cleanSplit(String line) {
         return line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
