@@ -32,10 +32,9 @@ public class MainScreen {
                                    *************************************
                                    [1] Attach Attendance
                                    [2] View Employee Details
-                                   [3] View Attendance
-                                   [4] View Gross Salary
-                                   [5] View Payslip
-                                   [6] Exit
+                                   [3] Print Payslip
+                                   [4] Payroll Report
+                                   [5] Exit
                                    -------------------------------------
                                    Enter the number you want to perform:""");
 
@@ -58,12 +57,8 @@ public class MainScreen {
                     case 4:
                         System.out.println("number one");
                         break;
-                        
+                       
                     case 5:
-                        System.out.println("number two");
-                        break;
-                        
-                    case 6:
                         System.out.println("number three");
                         scanner.close();
                         System.exit(0);

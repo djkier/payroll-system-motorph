@@ -71,10 +71,11 @@ public class Employee {
     }
     
     
-    
+    @Override
     public String toString(){
         return "Employee no.:\t" + this.id +
                 "\nName:\t\t" + this.lastName + ", " + this.firstName + 
-                "\nBirthday:\t" + this.birthDate;
+                "\nBirthday:\t" + this.birthDate +
+                "\nTest:\t\t" + this.hourlyRate;
     }
 }
