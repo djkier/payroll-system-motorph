@@ -86,6 +86,30 @@ public class Employee {
         return this.lastName + ", " + this.firstName;
     }
     
+    public String getPosition() {
+        return this.position;
+    }
+    
+    public Double getBasicSalary() {
+        return this.basicSalary;
+    }
+    
+    public Double getHourlyRate() {
+        return this.hourlyRate;
+    }
+    
+    public Double getRiceSubs(){
+        return this.riceSubs;
+    }
+    
+    public Double getPhoneAll() {
+        return this.phoneAll;
+    }
+    
+    public Double getClothingAll() {
+        return this.clothingAll;
+    }
+    
     public void addAttendance(String date, Attendance record){
         String[] sliceDate = date.split("/");
 

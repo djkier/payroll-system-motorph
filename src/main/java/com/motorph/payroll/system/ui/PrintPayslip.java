@@ -15,12 +15,10 @@ import java.util.Map;
 public class PrintPayslip {
     private Scanner scanner;
     private Map<Integer, Employee> employeeRecords;
-    private Payslip payslip;
     
     public PrintPayslip(Scanner scanner, Map<Integer, Employee> empRec) {
         this.scanner = scanner;
         this.employeeRecords = empRec;
-        this.payslip = new Payslip(scanner);
     }
     
     public void display(){
@@ -169,10 +167,11 @@ public class PrintPayslip {
                                """);
             if(scanner.hasNextInt()){
                 int choice = scanner.nextInt();
-                
+                Payslip payslip = new Payslip(emp, month, scanner);
                 switch(choice) {
                     case 1:
-                        this.payslip.display();
+                        printPaySlipHeader();
+                        payslip.display(1, 31);
                         break;
                         
                     case 2:
