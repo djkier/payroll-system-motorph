@@ -61,6 +61,12 @@ public class Employee {
         this.attendanceRecords = new TreeMap<>();
     }
     
+    public Employee() {
+        this.id = "No Record";
+        this.lastName = "Unknown";
+        this.firstName = "Unknown";
+    }
+    
     private Double numberParser(String money) {
         String noComma = money.replace(",", "");
         String noQuotations = noComma.replace("\"", "");
@@ -76,6 +82,10 @@ public class Employee {
         return this.lastName;
     }
     
+    public String getFullName() {
+        return this.lastName + ", " + this.firstName;
+    }
+    
     public void addAttendance(String date, Attendance record){
         String[] sliceDate = date.split("/");
 
@@ -89,6 +99,20 @@ public class Employee {
     
     public void clearAttendance() {
         attendanceRecords.clear();
+    }
+    
+    public String availableRecord(){
+        return this.attendanceRecords.firstKey() + " to " + this.attendanceRecords.lastKey();
+    }
+    
+    public Boolean monthExist(int month){
+        for(LocalDate date : attendanceRecords.keySet()){
+            if (date.getMonthValue() == month){
+                return true;
+            }
+        }
+        
+        return false;
     }
     
     

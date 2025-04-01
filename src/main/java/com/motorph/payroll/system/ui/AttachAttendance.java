@@ -11,6 +11,7 @@ import java.util.Scanner;
 public class AttachAttendance {
     private Scanner scanner;
     
+    
     public AttachAttendance(Scanner scanner) {
         this.scanner = scanner;
     }
@@ -19,11 +20,11 @@ public class AttachAttendance {
         
         while (true) {
             System.out.println("""
-                            *************************************
-                                     Attach Attendance
-                            *************************************
-                            [1] Go Back
-                            """);        
+                               *************************************
+                                          Print Payslip
+                               *************************************
+                               Work in Progress!
+                               [1]Go back""");
             
             int option = scanner.nextInt();
             if (option == 1) {
