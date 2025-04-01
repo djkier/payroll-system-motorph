@@ -4,6 +4,7 @@
  */
 package com.motorph.payroll.system.ui;
 import com.motorph.payroll.system.models.*;
+import com.motorph.payroll.system.services.Payslip;
 import java.util.Scanner;
 import java.util.Map;
 
@@ -14,10 +15,12 @@ import java.util.Map;
 public class PrintPayslip {
     private Scanner scanner;
     private Map<Integer, Employee> employeeRecords;
+    private Payslip payslip;
     
     public PrintPayslip(Scanner scanner, Map<Integer, Employee> empRec) {
         this.scanner = scanner;
         this.employeeRecords = empRec;
+        this.payslip = new Payslip(scanner);
     }
     
     public void display(){
@@ -126,7 +129,7 @@ public class PrintPayslip {
                 if (choice == 13) {
                     exit = true;
                 } else if (emp.monthExist(choice)){
-                    System.out.println("here");
+                    recordExist(emp, choice);
                 } else {
                     noRecord(emp);
                 }
@@ -149,9 +152,48 @@ public class PrintPayslip {
             if (!choice.isEmpty()) {
                 break;
             }
-            
-            
-
+        }
+    }
+    
+    public void recordExist(Employee emp, int month) {
+        boolean exit = false;
+        while(!exit) {
+            printPaySlipHeader();
+            printEmpDetails(emp);
+            System.out.println("""
+                               What type?
+                               [1]Full Month
+                               [2]First Half
+                               [3]Second Half
+                               [4]Go back
+                               """);
+            if(scanner.hasNextInt()){
+                int choice = scanner.nextInt();
+                
+                switch(choice) {
+                    case 1:
+                        this.payslip.display();
+                        break;
+                        
+                    case 2:
+                        System.out.println("2");
+                        break;
+                        
+                    case 3:
+                        System.out.println("3");
+                        break;
+                        
+                    case 4:
+                        exit = true;
+                        break;
+                        
+                    default: 
+                        System.out.println("Invalid input. Please enter a number between 1 to 4.");
+                }
+            } else {
+                System.out.println("Invalid input. Please enter a number between 1 to 4.");
+                scanner.next();
+            }
         }
     }
     
