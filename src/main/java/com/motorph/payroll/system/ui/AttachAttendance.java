@@ -17,11 +17,20 @@ public class AttachAttendance {
     
     public void display() {
         
-        System.out.println("""
-                           *************************************
+        while (true) {
+            System.out.println("""
+                            *************************************
                                      Attach Attendance
-                           *************************************
-                           """);
+                            *************************************
+                            [1] Go Back
+                            """);        
+            
+            int option = scanner.nextInt();
+            if (option == 1) {
+                break;
+            }
+        }
+        
         
         
     }
