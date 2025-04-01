@@ -111,27 +111,28 @@ public class Employee {
     
     @Override
     public String toString(){
-//        return "Employee no.:\t" + this.id +
-//                "\nName:\t\t" + this.lastName + ", " + this.firstName + 
-//                "\nBirthday:\t" + this.birthDate +
-//                "\nTest:\t\t" + this.hourlyRate;
-        Map<LocalDate, Attendance> decRecords = getAttendanceCus();
-        String records = "";
-        for (Map.Entry<LocalDate, Attendance> entry : decRecords.entrySet()) {
-            records = records + entry.getValue() + "\n";
-        }
+        return "Employee no.:\t" + this.id +
+                "\nName:\t\t" + this.lastName + ", " + this.firstName + 
+                "\nBirthday:\t" + this.birthDate;
         
-        if (records.equals("")) {
-            records = "No Record Found!";
-        }
-        
-        String template = 
-                "Employee No.: " + this.id + "\tLast Name: " + this.lastName +
-               "\nDate\t\tTime In\t\tTime Out\tTotal Hours\n";
-                
-        
-        
-        
-        return template + records;
+//        for attendance test
+//        Map<LocalDate, Attendance> decRecords = getAttendanceCus();
+//        String records = "";
+//        for (Map.Entry<LocalDate, Attendance> entry : decRecords.entrySet()) {
+//            records = records + entry.getValue() + "\n";
+//        }
+//        
+//        if (records.equals("")) {
+//            records = "No Record Found!";
+//        }
+//        
+//        String template = 
+//                "Employee No.: " + this.id + "\tLast Name: " + this.lastName +
+//               "\nDate\t\tTime In\t\tTime Out\tTotal Hours\n";
+//                
+//        
+//        
+//        
+//        return template + records;
     }
 }

@@ -5,22 +5,22 @@
 package com.motorph.payroll.system.ui;
 import com.motorph.payroll.system.models.*;
 import java.util.Scanner;
-import java.util.ArrayList;
+import java.util.Map;
 /**
  *
  * @author djjus
  */
 public class MainScreen {
     private Scanner scanner;
-    private ArrayList<Employee> employee;
+    private Map<Integer, Employee> employee;
     private AttachAttendance attendanceScreen;
     private SearchEmployee searchEmployee;
     
-    public MainScreen(Scanner scanner, ArrayList<Employee> employee) {
+    public MainScreen(Scanner scanner, Map<Integer, Employee> employeeRecords) {
         this.scanner = scanner;
-        this.employee = employee;
+        this.employee = employeeRecords;
         this.attendanceScreen = new AttachAttendance(scanner);
-        this.searchEmployee = new SearchEmployee(scanner, employee);
+        this.searchEmployee = new SearchEmployee(scanner, employeeRecords);
     }
     
     

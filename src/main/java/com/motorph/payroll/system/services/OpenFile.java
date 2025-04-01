@@ -16,6 +16,7 @@ import java.util.Map;
  * @author djjus
  */
 public class OpenFile {
+    //Employee No, Record
     private final Map<Integer, Employee> employeeMap;
     
     public OpenFile() {
@@ -78,13 +79,15 @@ public class OpenFile {
             employeeMap.get(Integer.valueOf(att[0])).addAttendance(att[3], details);
 
         }
+        
 //        employeeMap.get(10003).totalAttendance();
-        int count =0;
-        for (Employee emp : employeeMap.values()){
-            emp.totalAttendance();
-            count++;
-        }
-        System.out.println("Total Entry: "+ count);
+//        Test for entries, record per entry: 152 Total Entry: 34
+//        int count =0;
+//        for (Employee emp : employeeMap.values()){
+//            emp.totalAttendance();
+//            count++;
+//        }
+//        System.out.println("Total Entry: "+ count);
         
         
     }

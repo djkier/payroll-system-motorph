@@ -5,18 +5,18 @@
 package com.motorph.payroll.system.ui;
 import com.motorph.payroll.system.models.*;
 import java.util.Scanner;
-import java.util.ArrayList;
+import java.util.Map;
 /**
  *
  * @author djjus
  */
 public class SearchEmployee {
     private Scanner scanner;
-    private ArrayList<Employee> employee;
+    private Map<Integer, Employee> employeeRecords;
     
-    public SearchEmployee(Scanner scanner, ArrayList<Employee> employee){
+    public SearchEmployee(Scanner scanner, Map<Integer, Employee> employeeRecords){
         this.scanner = scanner;
-        this.employee = employee;
+        this.employeeRecords = employeeRecords;
     }
     
     public void display() {
@@ -61,8 +61,7 @@ public class SearchEmployee {
                 break;
             }
             
-            String print = resultTemplate(findEmployee(choice));
-            System.out.println(print);
+            System.out.println(resultTemplate(findEmployee(choice)));
 
         }
     }
@@ -86,24 +85,20 @@ public class SearchEmployee {
     
     public String findEmployee(int choice) {
         String result = "No record found.";
-        for (Employee emp : this.employee) {
-            if (emp.getId().equals(String.valueOf(choice))){
-                result = emp.toString();
-                break;
-            }
+        if (employeeRecords.containsKey(choice)) {
+            result = employeeRecords.get(choice).toString();
         }
         return result;
     }
     
     public String findEmployee(String choice) {
         String result = "No record found.";
-        for (Employee emp : this.employee) {
+        for (Employee emp : employeeRecords.values()){
             if (emp.getLastName().toLowerCase().equals(choice.toLowerCase())){
                 result = emp.toString();
-                break;
             }
         }
-        
+
         return result;
     }
     
