@@ -66,19 +66,26 @@ public class OpenFile {
     }
     
     public void openAttendance(String fileName) {
-        ArrayList<Attendance> attendanceList = new ArrayList<>();
         ArrayList<String> list = open(fileName);
         for (int i = 1; i < list.size(); i++) {
             String[] att = cleanSplit(list.get(i));
             
             Attendance details = new Attendance(
+                    //empNo, date, time in, time out
                     att[0], att[3], att[4], att[5]
             );
             
             employeeMap.get(Integer.valueOf(att[0])).addAttendance(att[3], details);
 
         }
-        System.out.println(employeeMap.get(10001));
+//        employeeMap.get(10003).totalAttendance();
+        int count =0;
+        for (Employee emp : employeeMap.values()){
+            emp.totalAttendance();
+            count++;
+        }
+        System.out.println("Total Entry: "+ count);
+        
         
     }
     

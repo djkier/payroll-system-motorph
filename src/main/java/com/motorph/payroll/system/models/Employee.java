@@ -79,16 +79,34 @@ public class Employee {
     public void addAttendance(String date, Attendance record){
         String[] sliceDate = date.split("/");
 
+        //need to check if the date exist
+        
         attendanceRecords.put(LocalDate.of(
                 Integer.valueOf(sliceDate[2]),
                 Integer.valueOf(sliceDate[0]),
                 Integer.valueOf(sliceDate[1])), record);
-        
-
     }
     
-    public Map<LocalDate, Attendance> getAttendanceDec(){
-        return this.attendanceRecords.subMap(LocalDate.of(2024, 1, 2), LocalDate.of(2024, 6, 1));
+    public void clearAttendance() {
+        attendanceRecords.clear();
+    }
+    
+    
+    //customizable attendance recovery, return is a sub Map
+    public Map<LocalDate, Attendance> getAttendanceCus(){
+        return this.attendanceRecords.subMap(LocalDate.of(2024, 6, 1), LocalDate.of(2024, 7, 1));
+    }
+    
+    public void totalAttendance(){
+        double totalHours = 0;
+        for (Attendance att : attendanceRecords.values()) {
+            totalHours += att.getWorkingHours();
+        }
+        
+        //clean totalHours
+        double result = Math.round(totalHours * 100.0 ) / 100.0;
+        
+        System.out.println("Total Record: " + attendanceRecords.size() + "\tTotal Hours: " + result);
     }
     
     @Override
@@ -97,7 +115,7 @@ public class Employee {
 //                "\nName:\t\t" + this.lastName + ", " + this.firstName + 
 //                "\nBirthday:\t" + this.birthDate +
 //                "\nTest:\t\t" + this.hourlyRate;
-        Map<LocalDate, Attendance> decRecords = getAttendanceDec();
+        Map<LocalDate, Attendance> decRecords = getAttendanceCus();
         String records = "";
         for (Map.Entry<LocalDate, Attendance> entry : decRecords.entrySet()) {
             records = records + entry.getValue() + "\n";
