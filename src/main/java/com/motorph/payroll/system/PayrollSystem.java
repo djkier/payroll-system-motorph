@@ -38,19 +38,9 @@ public class PayrollSystem {
         
         double salary = 35000;
         
-        Deductions de = new Deductions(salary);
-        System.out.println("Gross Salary:\t" + salary);
-        System.out.println("SSS:\t\t" + de.sss());
-        System.out.println("Philhealth:\t" + de.philhealth());
-        System.out.println("PAGIBIG:\t" + de.pagIbig());
-        System.out.println("Deductions:\t" + de.totalDeduction());
-        System.out.println("Net Salary:\t" + (salary - de.totalDeduction()));
-        System.out.println("--------------------------------------------");
-        System.out.println("Withholding Tax\t" + de.withholdingTax());
-        System.out.println("Net Salary:\t" + (salary - de.totalDeduction() - de.withholdingTax()));
 
-//        MainScreen mainScreen = new MainScreen(scanner, employeeDetails);
-//        mainScreen.display();
+        MainScreen mainScreen = new MainScreen(scanner, employeeDetails);
+        mainScreen.display();
 
     }
     

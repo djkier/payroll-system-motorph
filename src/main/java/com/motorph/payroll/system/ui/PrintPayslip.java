@@ -5,9 +5,12 @@
 package com.motorph.payroll.system.ui;
 import com.motorph.payroll.system.models.*;
 import com.motorph.payroll.system.services.Payslip;
+import com.motorph.payroll.system.services.StringDate;
 import java.util.Scanner;
 import java.util.Map;
 import java.time.YearMonth;
+import java.time.LocalDate;
+import java.time.Month;
 
 /**
  *
@@ -35,7 +38,7 @@ public class PrintPayslip {
                 }
                 resultDisplay(choice);
             } else {
-                System.out.println("Invalid input. Please enter a number between 1 to 7.");
+                System.out.println("Invalid input. Please enter a number.");
                 scanner.next();
             }            
             
@@ -88,7 +91,7 @@ public class PrintPayslip {
                         break;
                         
                     case 2:
-                        System.out.println("2");
+                        customRange(emp);
                         break;
                         
                     case 3:
@@ -174,17 +177,17 @@ public class PrintPayslip {
                 
                 switch(choice) {
                     case 1:
-                        printPaySlipHeader();
+                        
                         payslip.display(2024, month, 1, 2024, month, lastDay);
                         break;
                         
                     case 2:
-                        System.out.println("2");
+                        
                         payslip.display(2024, month, 1, 2024, month, 16);
                         break;
                         
                     case 3:
-                        System.out.println("3");
+                        
                         payslip.display(2024, month, 16, 2024, month, lastDay);
                         break;
                         
@@ -202,5 +205,91 @@ public class PrintPayslip {
         }
     }
     
+    public void customRange(Employee emp){
+        Payslip payslip = new Payslip(emp,scanner);
+        while(true) {
+            printPaySlipHeader();
+            printEmpDetails(emp);
+            System.out.println("Enter starting date(YYYY-MM-DD): (Enter [1] to go back)");
+            String date1 = askForValidDate();
+            if (date1.equals("1")){
+                break;
+            }
+ 
+            System.out.println("From " + date1 + " to ?");
+            System.out.println("Enter end date(YYYY-MM-DD): (Enter [1] to change starting date)");
+            String date2 = askForValidDate();
+            if (date2.equals("1")) {
+                continue;
+            }
+            
+            if (isValidOrder(date1, date2)){
+                System.out.println("From " + date1 + " to " + date2);
+                StringDate start = new StringDate(date1);
+                StringDate end = new StringDate(date2);
+                payslip.display(start.getYear(), start.getMonth(), start.getDay(), end.getYear(), end.getMonth(), end.getDay());
+                break;
+            }
+            
+            System.out.println("Starting date should be earlier than end date! ");
+        }
+    }
     
+    public boolean isValidOrder(String date1, String date2) {
+        return convertDate(date1).isBefore(convertDate(date2));
+    }
+    
+    public LocalDate convertDate(String date){
+        StringDate d = new StringDate(date);
+        return LocalDate.of(d.getYear(), d.getMonth(), d.getDay());
+    }
+    
+    
+    public String askForValidDate(){
+        String output;
+        while(true){
+            String date = scanner.next();
+            if (date.equals("1")){
+                output = date;
+                break;
+            }
+            
+            if (isValidFormat(date)){
+                output = date;
+                break;
+            }
+            
+            System.out.println("""
+                               Invalid Date!
+                               Date format (YYYY-MM-DD)
+                               Enter again: (Enter [1] to go back)""");
+        }
+        
+        return output;
+    }
+    
+    public boolean isValidFormat(String date) {
+        if (!date.matches("^\\d{4}-\\d{1,2}-\\d{1,2}$")){
+            return false;
+        }
+        
+        return isValidDate(date);
+    }
+    
+    public boolean isValidDate(String date) {
+        StringDate d = new StringDate(date);
+        
+        return isValidMonth(d.getMonth()) && isValidDay(d.getYear(), d.getMonth(), d.getDay());
+    }
+    
+    public boolean isValidMonth(int month) {
+        return month <= 12;
+    }
+    
+    public boolean isValidDay(int year, int month, int day){
+        YearMonth ym = YearMonth.of(year, month);
+        
+        return day <= ym.lengthOfMonth();
+        
+    }
 }

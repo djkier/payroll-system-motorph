@@ -34,8 +34,27 @@ public class Payslip {
     
 
     public void display(int startYear, int startMonth, int startDate, int endYear, int endMonth, int endDate){
-        while(true) {
+        LocalDate startPeriod = LocalDate.of(startYear, startMonth, startDate);
+        LocalDate endPeriod = LocalDate.of(endYear, endMonth, endDate);
+        displayHeader(startPeriod, endPeriod);
+        
+        if ((startPeriod.isBefore(emp.firstEntry()) && endPeriod.isBefore(emp.firstEntry())) ||
+            (startPeriod.isAfter(emp.lastEntry()) && endPeriod.isAfter(emp.lastEntry()))) {
+            while(true) {
+                System.out.println("No Record Found!");
+                System.out.println("(Enter any key to print and go back)");
+                String choice = scanner.next();
+                if(!choice.isEmpty()){
+                    break;
+                }               
+            }
 
+            return;
+        }
+        
+        while(true) {
+            
+            
             if (isLastDay(endYear, endMonth, endDate)) {
                 endDate = 1;
                 endMonth ++;
@@ -43,7 +62,6 @@ public class Payslip {
                     endMonth = 1;
                     endYear++;
                 }
-                
             }
             
             Map<LocalDate, Attendance> customMonth = emp.getAttendanceCus(startYear, startMonth, startDate, endYear, endMonth, endDate);
@@ -52,19 +70,9 @@ public class Payslip {
             double grossIncome = emp.getHourlyRate() * totalHoursWorked(customMonth);
             
             Deductions deduction = new Deductions(grossIncome);
+            double takeHomeMoney = grossIncome + totalBenefits - deduction.totalDeduction() - deduction.withholdingTax();
             
-            System.out.println("""
-                               ----------------------------------------------------------------------
-                               MotorPH
-                               7 Jupiter Avenue Cor., Bagong Nayon, Quezon City
-                               Phone: (028) 911-5071 / (028) 911-5072 / (028) 911-5073 
-                               Email: corporate@motorph.com
-                               ----------------------------------------------------------------------""");
-            System.out.println("PAYSLIP NO:\t" + paySlipNumber(emp.getId(), endYear, endMonth, endDate) + "\t\t" + "PERIOD START\t" + LocalDate.of(startYear, startMonth, startDate) );
-            System.out.println("EMPLOYEE ID:\t" + emp.getId() + "\t\t\t" + "PERIOD END\t" + LocalDate.of(endYear, endMonth, endDate) );
-            System.out.println("EMPLOYEE NAME:\t" + emp.getFullName());
-            System.out.println("POSITION\t" + emp.getPosition());
-            System.out.println("----------------------------------------------------------------------");
+
             System.out.println("EARNINGS");
             System.out.println("Monthly Rate\t\t\t\t\t" + money(emp.getBasicSalary()));
             System.out.println("Hourly Rate\t\t\t\t\t" +  money(emp.getHourlyRate()));
@@ -81,15 +89,15 @@ public class Payslip {
             System.out.println("Social Security System\t\t\t\t" + money(deduction.sss()));
             System.out.println("Philhealth\t\t\t\t\t" + money(deduction.philhealth()));
             System.out.println("PAGIBIG\t\t\t\t\t\t" + money(deduction.pagIbig()));
-            System.out.println("Withholding Tax\t\t\t\t" + money(10000.0));
-            System.out.println("Total\t\t\t\t\t\t" + money(deduction.totalDeduction()));
+            System.out.println("Withholding Tax\t\t\t\t\t" + money(deduction.withholdingTax()));
+            System.out.println("Total\t\t\t\t\t\t" + money(deduction.totalDeduction() + deduction.withholdingTax()));
             System.out.println("----------------------------------------------------------------------");
             System.out.println("SUMMARY");
             System.out.println("Gross Income\t\t\t\t\t" + money(grossIncome));
             System.out.println("Benefits\t\t\t\t\t" + money(totalBenefits));
-            System.out.println("Deductions\t\t\t\t\t" + money(deduction.totalDeduction()));
+            System.out.println("Deductions\t\t\t\t\t" + money(deduction.totalDeduction() + deduction.withholdingTax()));
             System.out.println("----------------------------------------------------------------------");
-            System.out.println("TAKE HOME PAY\t\t\t\t\t" + money(10000.0));
+            System.out.println("TAKE HOME PAY\t\t\t\t\t" + money(takeHomeMoney));
             
             
             System.out.println("\n(Enter any key to print and go back)");
@@ -126,9 +134,9 @@ public class Payslip {
         return date == ym.lengthOfMonth();
     }
     
-    public String paySlipNumber(String id, int year, int month, int date){
+    public String paySlipNumber(String id, LocalDate end){
         String lastThree = id.substring(id.length() - 3);
-        return lastThree + "-" + LocalDate.of(year, month, date);
+        return lastThree + "-" + end;
     }
     
     public double totalHoursWorked(Map<LocalDate, Attendance> subMap) {
@@ -139,5 +147,20 @@ public class Payslip {
         
         
         return totalHours;
+    }
+    
+    public void displayHeader(LocalDate start, LocalDate end){
+        System.out.println("""
+                   ----------------------------------------------------------------------
+                   MotorPH
+                   7 Jupiter Avenue Cor., Bagong Nayon, Quezon City
+                   Phone: (028) 911-5071 / (028) 911-5072 / (028) 911-5073 
+                   Email: corporate@motorph.com
+                   ----------------------------------------------------------------------""");
+        System.out.println("PAYSLIP NO:\t" + paySlipNumber(emp.getId(), end) + "\t\t" + "PERIOD START\t" + start );
+        System.out.println("EMPLOYEE ID:\t" + emp.getId() + "\t\t\t" + "PERIOD END\t" + end);
+        System.out.println("EMPLOYEE NAME:\t" + emp.getFullName());
+        System.out.println("POSITION\t" + emp.getPosition());
+        System.out.println("----------------------------------------------------------------------");
     }
 }

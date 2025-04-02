@@ -144,9 +144,15 @@ public class Employee {
     
     //customizable attendance recovery, return is a sub Map
     public Map<LocalDate, Attendance> getAttendanceCus(int startYear, int startMonth, int startDate, int endYear, int endMonth, int endDate){
-
-
         return this.attendanceRecords.subMap(LocalDate.of(startYear, startMonth, startDate), LocalDate.of(endYear, endMonth, endDate));
+    }
+    
+    public LocalDate firstEntry(){
+        return this.attendanceRecords.firstKey();
+    }
+    
+    public LocalDate lastEntry(){
+        return this.attendanceRecords.lastKey();
     }
     
     public void totalAttendance(){
