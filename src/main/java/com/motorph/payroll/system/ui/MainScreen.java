@@ -16,6 +16,8 @@ public class MainScreen {
     private AttachAttendance attendanceScreen;
     private SearchEmployee searchEmployee;
     private PrintPayslip printPayslip;
+    private PayrollReport payrollReport;
+    
     
     public MainScreen(Scanner scanner, Map<Integer, Employee> employeeRecords) {
         this.scanner = scanner;
@@ -23,7 +25,7 @@ public class MainScreen {
         this.attendanceScreen = new AttachAttendance(scanner);
         this.searchEmployee = new SearchEmployee(scanner, employeeRecords);
         this.printPayslip = new PrintPayslip(scanner, employeeRecords);
-        
+        this.payrollReport = new PayrollReport(scanner, employeeRecords);
     }
     
     
@@ -58,7 +60,7 @@ public class MainScreen {
                         break;
                         
                     case 4:
-                        System.out.println("number one");
+                        payrollReport.display();
                         break;
                        
                     case 5:
