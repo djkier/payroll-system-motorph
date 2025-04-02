@@ -4,6 +4,7 @@
  */
 package com.motorph.payroll.system.ui;
 import com.motorph.payroll.system.models.Employee;
+import com.motorph.payroll.system.services.Payroll;
 
 import java.util.Scanner;
 import java.util.Map;
@@ -24,7 +25,48 @@ public class PayrollReport {
     }
     
     public void display(){
-        System.out.println("Payroll Report");
+        while(true) {
+            header();
+            Payroll payroll = new Payroll(scanner, empRecords);
+            System.out.println("Available Record: " + empRecords.get(10001).availableRecord());
+            System.out.println("""
+                               Make a report for the month of:
+                                [1]January           [7]July
+                                [2]February          [8]August
+                                [3]March             [9]September
+                                [4]April             [10]October
+                                [5]May               [11]November
+                                [6]June              [12]December
+                               -----------------------------------
+                               Enter [13] to go back:""");
+            
+            if(scanner.hasNextInt()){
+                int choice = scanner.nextInt();
+                if (choice == 13) {
+                    break;
+                }
+                
+                if (choice >= 1 && choice <= 12) {
+                    payroll.display(choice);
+                } else {
+                    System.out.println("Please enter a number between 1 to 13.");
+                }
+                
+            } else {
+                System.out.println("Invalid input. Please enter a number between 1 to 13.");
+                scanner.next();
+            }
+            
+            
+            
+        }
+    }
+    
+    public void header(){
+        System.out.println("""
+                           *************************************
+                                       Payroll Report
+                           *************************************""");
     }
     
 }
