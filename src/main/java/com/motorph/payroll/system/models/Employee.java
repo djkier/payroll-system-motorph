@@ -8,6 +8,8 @@ import java.util.TreeMap;
 import java.util.Map;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.Month;
+import java.time.YearMonth;
 
 /**
  *
@@ -141,8 +143,10 @@ public class Employee {
     
     
     //customizable attendance recovery, return is a sub Map
-    public Map<LocalDate, Attendance> getAttendanceCus(){
-        return this.attendanceRecords.subMap(LocalDate.of(2024, 6, 1), LocalDate.of(2024, 7, 1));
+    public Map<LocalDate, Attendance> getAttendanceCus(int startYear, int startMonth, int startDate, int endYear, int endMonth, int endDate){
+
+
+        return this.attendanceRecords.subMap(LocalDate.of(startYear, startMonth, startDate), LocalDate.of(endYear, endMonth, endDate));
     }
     
     public void totalAttendance(){

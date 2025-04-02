@@ -3,9 +3,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.motorph.payroll.system.services;
-import com.motorph.payroll.system.models.Employee;
+import com.motorph.payroll.system.models.*;
 import java.util.Scanner;
+import java.util.Map;
 import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.YearMonth;
+
 
 
 /**
@@ -14,13 +19,11 @@ import java.text.DecimalFormat;
  */
 public class Payslip {
     private Employee emp;
-    private int month;
 
     private Scanner scanner;
     
-    public  Payslip(Employee emp, int month, Scanner scanner) {
+    public  Payslip(Employee emp, Scanner scanner) {
         this.emp = emp;
-        this.month = month;
         this.scanner = scanner;
     }
     
@@ -30,8 +33,20 @@ public class Payslip {
     }
     
 
-    public void display(int start, int end){
+    public void display(int startYear, int startMonth, int startDate, int endYear, int endMonth, int endDate){
         while(true) {
+
+            if (isLastDay(endYear, endMonth, endDate)) {
+                endDate = 1;
+                endMonth ++;
+                if (endMonth == 13) {
+                    endMonth = 1;
+                    endYear++;
+                }
+                
+            }
+            
+            Map<LocalDate, Attendance> customMonth = emp.getAttendanceCus(startYear, startMonth, startDate, endYear, endMonth, endDate);
             
             double totalBenefits = emp.getRiceSubs() + emp.getPhoneAll()+ emp.getClothingAll();
             
@@ -42,17 +57,16 @@ public class Payslip {
                                Phone: (028) 911-5071 / (028) 911-5072 / (028) 911-5073 
                                Email: corporate@motorph.com
                                ----------------------------------------------------------------------""");
-            System.out.println("PAYSLIP NO:\t" + "31-2023-12-30" + "\t\t" + "PERIOD START\t" + "12/18/2023" );
-            System.out.println("EMPLOYEE ID:\t" + "10001" + "\t\t\t" + "PERIOD END\t" + "12/18/2023" );
+            System.out.println("PAYSLIP NO:\t" + paySlipNumber(emp.getId(), endYear, endMonth, endDate) + "\t\t" + "PERIOD START\t" + LocalDate.of(startYear, startMonth, startDate) );
+            System.out.println("EMPLOYEE ID:\t" + emp.getId() + "\t\t\t" + "PERIOD END\t" + LocalDate.of(endYear, endMonth, endDate) );
             System.out.println("EMPLOYEE NAME:\t" + emp.getFullName());
             System.out.println("POSITION\t" + emp.getPosition());
             System.out.println("----------------------------------------------------------------------");
             System.out.println("EARNINGS");
             System.out.println("Monthly Rate\t\t\t\t\t" + money(emp.getBasicSalary()));
             System.out.println("Hourly Rate\t\t\t\t\t" +  money(emp.getHourlyRate()));
-            System.out.println("Hours Worked\t\t\t\t\t " + numberFormat(10.0));
-            System.out.println("Overtime\t\t\t\t\t" + money(10000.0));
-            System.out.println("Gross Income\t\t\t\t\t" + money(10000.0));
+            System.out.println("Hours Worked\t\t\t\t\t " + numberFormat(totalHoursWorked(customMonth)));
+            System.out.println("Gross Income\t\t\t\t\t" + money(emp.getHourlyRate() * totalHoursWorked(customMonth)));
             System.out.println("----------------------------------------------------------------------");
             System.out.println("BENEFITS");
             System.out.println("Rice Subsidy\t\t\t\t\t" + money(emp.getRiceSubs()));
@@ -99,5 +113,28 @@ public class Payslip {
         }
         
         return formatted;
+    }
+    
+    public Boolean isLastDay(int year, int month, int date){
+        LocalDate lastDate = LocalDate.of(year, month, date);
+        YearMonth ym = YearMonth.from(lastDate);
+        
+        
+        return date == ym.lengthOfMonth();
+    }
+    
+    public String paySlipNumber(String id, int year, int month, int date){
+        String lastThree = id.substring(id.length() - 3);
+        return lastThree + "-" + LocalDate.of(year, month, date);
+    }
+    
+    public double totalHoursWorked(Map<LocalDate, Attendance> subMap) {
+        double totalHours = 0;
+        for (Attendance att : subMap.values()){
+            totalHours += att.getWorkingHours();
+        }
+        
+        
+        return totalHours;
     }
 }

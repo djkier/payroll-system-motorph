@@ -7,6 +7,7 @@ import com.motorph.payroll.system.models.*;
 import com.motorph.payroll.system.services.Payslip;
 import java.util.Scanner;
 import java.util.Map;
+import java.time.YearMonth;
 
 /**
  *
@@ -167,19 +168,24 @@ public class PrintPayslip {
                                """);
             if(scanner.hasNextInt()){
                 int choice = scanner.nextInt();
-                Payslip payslip = new Payslip(emp, month, scanner);
+                Payslip payslip = new Payslip(emp,scanner);
+                YearMonth ym = YearMonth.of(2024, month);
+                int lastDay = ym.lengthOfMonth();
+                
                 switch(choice) {
                     case 1:
                         printPaySlipHeader();
-                        payslip.display(1, 31);
+                        payslip.display(2024, month, 1, 2024, month, lastDay);
                         break;
                         
                     case 2:
                         System.out.println("2");
+                        payslip.display(2024, month, 1, 2024, month, 16);
                         break;
                         
                     case 3:
                         System.out.println("3");
+                        payslip.display(2024, month, 16, 2024, month, lastDay);
                         break;
                         
                     case 4:
