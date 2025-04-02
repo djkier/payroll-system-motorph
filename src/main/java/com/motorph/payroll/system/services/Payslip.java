@@ -49,6 +49,9 @@ public class Payslip {
             Map<LocalDate, Attendance> customMonth = emp.getAttendanceCus(startYear, startMonth, startDate, endYear, endMonth, endDate);
             
             double totalBenefits = emp.getRiceSubs() + emp.getPhoneAll()+ emp.getClothingAll();
+            double grossIncome = emp.getHourlyRate() * totalHoursWorked(customMonth);
+            
+            Deductions deduction = new Deductions(grossIncome);
             
             System.out.println("""
                                ----------------------------------------------------------------------
@@ -66,7 +69,7 @@ public class Payslip {
             System.out.println("Monthly Rate\t\t\t\t\t" + money(emp.getBasicSalary()));
             System.out.println("Hourly Rate\t\t\t\t\t" +  money(emp.getHourlyRate()));
             System.out.println("Hours Worked\t\t\t\t\t " + numberFormat(totalHoursWorked(customMonth)));
-            System.out.println("Gross Income\t\t\t\t\t" + money(emp.getHourlyRate() * totalHoursWorked(customMonth)));
+            System.out.println("Gross Income\t\t\t\t\t" + money(grossIncome));
             System.out.println("----------------------------------------------------------------------");
             System.out.println("BENEFITS");
             System.out.println("Rice Subsidy\t\t\t\t\t" + money(emp.getRiceSubs()));
@@ -75,16 +78,16 @@ public class Payslip {
             System.out.println("Total\t\t\t\t\t\t" + money(totalBenefits));
             System.out.println("----------------------------------------------------------------------");
             System.out.println("DEDUCTIONS");
-            System.out.println("Social Security System\t\t\t\t" + money(10000.0));
-            System.out.println("Philhealth\t\t\t\t\t" + money(10000.0));
-            System.out.println("PAGIBIG\t\t\t\t\t\t" + money(10000.0));
-            System.out.println("Total\t\t\t\t\t\t" + money(10000.0));
+            System.out.println("Social Security System\t\t\t\t" + money(deduction.sss()));
+            System.out.println("Philhealth\t\t\t\t\t" + money(deduction.philhealth()));
+            System.out.println("PAGIBIG\t\t\t\t\t\t" + money(deduction.pagIbig()));
+            System.out.println("Withholding Tax\t\t\t\t" + money(10000.0));
+            System.out.println("Total\t\t\t\t\t\t" + money(deduction.totalDeduction()));
             System.out.println("----------------------------------------------------------------------");
             System.out.println("SUMMARY");
-            System.out.println("Gross Income\t\t\t\t\t" + money(10000.0));
+            System.out.println("Gross Income\t\t\t\t\t" + money(grossIncome));
             System.out.println("Benefits\t\t\t\t\t" + money(totalBenefits));
-            System.out.println("Deductions\t\t\t\t\t" + money(10000.0));
-            System.out.println("Less Withholding Tax\t\t\t\t" + money(10000.0));
+            System.out.println("Deductions\t\t\t\t\t" + money(deduction.totalDeduction()));
             System.out.println("----------------------------------------------------------------------");
             System.out.println("TAKE HOME PAY\t\t\t\t\t" + money(10000.0));
             
