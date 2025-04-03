@@ -183,7 +183,7 @@ public class PrintPayslip {
                         
                     case 2:
                         
-                        payslip.display(2024, month, 1, 2024, month, 16);
+                        payslip.display(2024, month, 1, 2024, month, 15);
                         break;
                         
                     case 3:

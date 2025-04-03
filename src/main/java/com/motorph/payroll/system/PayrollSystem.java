@@ -9,6 +9,8 @@ import com.motorph.payroll.system.services.*;
 import java.io.*;
 import java.util.*;
 
+import java.time.LocalDate;
+
 
 /**
  *
@@ -23,7 +25,6 @@ public class PayrollSystem {
         Scanner scanner = new Scanner(System.in);
         OpenFile openFile = new OpenFile();
         
-        
         String details = "employee-details.csv";
         String attendance = "employee-attendance.csv";
         
@@ -35,9 +36,6 @@ public class PayrollSystem {
             count++;
         }
         System.out.println("Total Employee: " + count);
-        
-        double salary = 35000;
-        
 
         MainScreen mainScreen = new MainScreen(scanner, employeeDetails);
         mainScreen.display();

@@ -26,7 +26,7 @@ public class Deductions {
         double base = (this.gross - 3250) / 500;
         double contribution = Math.floor(base + 1) * 22.50 + 135;
         
-        return precision(contribution/3);
+        return precision(contribution);
     }
     
     public double philhealth(){

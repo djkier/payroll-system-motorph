@@ -38,6 +38,8 @@ public class Payslip {
         LocalDate endPeriod = LocalDate.of(endYear, endMonth, endDate);
         displayHeader(startPeriod, endPeriod);
         
+        Benefits benefits = new Benefits(startPeriod, endPeriod, this.emp);
+        
         if ((startPeriod.isBefore(emp.firstEntry()) && endPeriod.isBefore(emp.firstEntry())) ||
             (startPeriod.isAfter(emp.lastEntry()) && endPeriod.isAfter(emp.lastEntry()))) {
             while(true) {
@@ -66,7 +68,7 @@ public class Payslip {
             
             Map<LocalDate, Attendance> customMonth = emp.getAttendanceCus(startYear, startMonth, startDate, endYear, endMonth, endDate);
             
-            double totalBenefits = emp.getRiceSubs() + emp.getPhoneAll()+ emp.getClothingAll();
+            double totalBenefits = benefits.riceSubs() + benefits.phoneAll() + benefits.clothingAll();
             double grossIncome = emp.getHourlyRate() * totalHoursWorked(customMonth);
             
             Deductions deduction = new Deductions(grossIncome);
@@ -80,9 +82,9 @@ public class Payslip {
             System.out.println("Gross Income\t\t\t\t\t" + money(grossIncome));
             System.out.println("----------------------------------------------------------------------");
             System.out.println("BENEFITS");
-            System.out.println("Rice Subsidy\t\t\t\t\t" + money(emp.getRiceSubs()));
-            System.out.println("Phone Allowance\t\t\t\t\t" + money(emp.getPhoneAll()));
-            System.out.println("Clothing Allowance\t\t\t\t" + money(emp.getClothingAll()));
+            System.out.println("Rice Subsidy\t\t\t\t\t" + money(benefits.riceSubs()));
+            System.out.println("Phone Allowance\t\t\t\t\t" + money(benefits.phoneAll()));
+            System.out.println("Clothing Allowance\t\t\t\t" + money(benefits.clothingAll()));
             System.out.println("Total\t\t\t\t\t\t" + money(totalBenefits));
             System.out.println("----------------------------------------------------------------------");
             System.out.println("DEDUCTIONS");
@@ -163,4 +165,6 @@ public class Payslip {
         System.out.println("POSITION\t" + emp.getPosition());
         System.out.println("----------------------------------------------------------------------");
     }
+    
+    
 }
