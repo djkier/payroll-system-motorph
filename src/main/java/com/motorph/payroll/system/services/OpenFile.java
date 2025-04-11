@@ -18,9 +18,11 @@ import java.util.Map;
 public class OpenFile {
     //Employee No, Record
     private final Map<Integer, Employee> employeeMap;
+    private boolean fileChanged;
     
     public OpenFile() {
         this.employeeMap = new HashMap<>();
+        this.fileChanged = false;
     }
     
     public ArrayList<String> open(String fileName) {
@@ -29,6 +31,7 @@ public class OpenFile {
     
         if (inputStream == null) {
             System.out.println("File not found!");
+            this.fileChanged = false;
             return list;
         }
 
@@ -37,10 +40,10 @@ public class OpenFile {
             while ((line = reader.readLine()) != null) {
                 list.add(line);
             }
-        }
-        
-        catch (Exception e) {
-                e.printStackTrace();
+        } catch (Exception e) {
+                System.out.println("File does not exist!");
+                this.fileChanged = false;
+
         }
         
         return list;
@@ -68,33 +71,39 @@ public class OpenFile {
     
     public void openAttendance(String fileName) {
         ArrayList<String> list = open(fileName);
+        if (list.isEmpty()){
+            System.out.println("File does not exist!");
+            return;
+        }
+        clearAttendance();
         for (int i = 1; i < list.size(); i++) {
+            
             String[] att = cleanSplit(list.get(i));
             
             Attendance details = new Attendance(
                     //empNo, date, time in, time out
                     att[0], att[3], att[4], att[5]
             );
-            
             employeeMap.get(Integer.valueOf(att[0])).addAttendance(att[3], details);
 
         }
-        
-//        employeeMap.get(10003).totalAttendance();
-//        Test for entries, record per entry: 152 Total Entry: 34
-//        int count =0;
-//        for (Employee emp : employeeMap.values()){
-//            emp.totalAttendance();
-//            count++;
-//        }
-//        System.out.println("Total Entry: "+ count);
-        
-        
+        this.fileChanged = true;
+
+    }
+    
+    public void clearAttendance(){
+        for (Integer e : employeeMap.keySet()){
+            employeeMap.get(e).clearAttendance();
+        }
     }
     
     
     public String[] cleanSplit(String line) {
         return line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
+    }
+    
+    public boolean getIfFileChanged(){
+        return this.fileChanged;
     }
     
 }

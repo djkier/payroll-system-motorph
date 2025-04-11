@@ -6,10 +6,7 @@ package com.motorph.payroll.system;
 import com.motorph.payroll.system.ui.*;
 import com.motorph.payroll.system.models.*;
 import com.motorph.payroll.system.services.*;
-import java.io.*;
 import java.util.*;
-
-import java.time.LocalDate;
 
 
 /**
@@ -37,7 +34,7 @@ public class PayrollSystem {
         }
         System.out.println("Total Employee: " + count);
 
-        MainScreen mainScreen = new MainScreen(scanner, employeeDetails);
+        MainScreen mainScreen = new MainScreen(scanner, employeeDetails, attendance);
         mainScreen.display();
 
     }

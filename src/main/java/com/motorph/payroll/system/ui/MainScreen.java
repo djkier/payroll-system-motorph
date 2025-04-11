@@ -19,10 +19,10 @@ public class MainScreen {
     private PayrollReport payrollReport;
     
     
-    public MainScreen(Scanner scanner, Map<Integer, Employee> employeeRecords) {
+    public MainScreen(Scanner scanner, Map<Integer, Employee> employeeRecords, String fileName) {
         this.scanner = scanner;
         this.employee = employeeRecords;
-        this.attendanceScreen = new AttachAttendance(scanner);
+        this.attendanceScreen = new AttachAttendance(scanner, fileName);
         this.searchEmployee = new SearchEmployee(scanner, employeeRecords);
         this.printPayslip = new PrintPayslip(scanner, employeeRecords);
         this.payrollReport = new PayrollReport(scanner, employeeRecords);
