@@ -26,7 +26,7 @@ public class AttachAttendance {
         while (true) {
             System.out.println("""
                                *************************************
-                                          Print Payslip
+                                          Attach Attendance
                                *************************************
                                """ +
                                "Current Attendance file: " + fileName + "\n" +
@@ -49,7 +49,7 @@ public class AttachAttendance {
     public void enterNewFile(){
         System.out.println("""
                            *************************************
-                                      Print Payslip
+                                      Attach Attendance
                            *************************************
                            Enter file name:""");
 
