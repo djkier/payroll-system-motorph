@@ -64,7 +64,6 @@ public class MainScreen {
                         break;
                        
                     case 5:
-                        System.out.println("number three");
                         scanner.close();
                         System.exit(0);
                         break;    
