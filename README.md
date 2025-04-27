@@ -23,8 +23,8 @@ This is a proposed payroll system built for **MotorPH** to help manage employee 
 ### Option 2: Using the Command Line 🖱️
 
  1. **Ensure you have Maven and JDK 21**:
-	  **JDK 21**: Ensure that **JDK 21** is installed. If you don’t have it, install it by following the instructions  from [here](https://adoptium.net/installation/).
-	  **Maven**: Ensure that you have **Apache Maven** installed. Follow instructions from **[here](https://maven.apache.org/install.html)**.
+	 - **JDK 21**: Ensure that **JDK 21** is installed. If you don’t have it, install it by following the instructions  from [here](https://adoptium.net/installation/).
+	 - **Maven**: Ensure that you have **Apache Maven** installed. Follow instructions from **[here](https://maven.apache.org/install.html)**.
 	  
  2. **Clone the repository**:
 	- ` git clone https://github.com/djkier/payroll-system-motorph.git`
